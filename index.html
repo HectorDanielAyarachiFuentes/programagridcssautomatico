@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programación con Bloques - Maquetado con CSS Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr; /* Dos columnas */
+      grid-gap: 20px; /* Espacio entre las columnas */
+      padding: 20px;
+    }
+
+    .blocks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Tres columnas de bloques */
+      grid-gap: 10px; /* Espacio entre los bloques */
+      background-color: #f1f1f1;
+      padding: 10px;
+    }
+
+    .block {
+      background-color: #ddd;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .block:hover {
+      background-color: #ccc;
+    }
+
+    .programming-area {
+      background-color: #f9f9f9;
+      padding: 10px;
+      min-height: 200px;
+    }
+
+    .run-button {
+      margin-top: 10px;
+    }
+
+    .output {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="blocks">
+      <!-- Aquí agregar los bloques -->
+      <div class="block" draggable="true" ondragstart="dragStart(event)">Bloque 1</div>
+      <div class="block" draggable="true" ondragstart="dragStart(event)">Bloque 2</div>
+      <div class="block" draggable="true" ondragstart="dragStart(event)">Bloque 3</div>
+      <!-- Agregar más bloques aquí -->
+    </div>
+    <div>
+      <div class="programming-area" id="programmingArea" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+      <button class="run-button" onclick="ejecutarPrograma()">Ejecutar Programa</button>
+      <div class="output" id="output"></div>
+    </div>
+  </div>
+
+  <script>
+    // Función para arrastrar los bloques y soltarlos en el área de programación
+    function dragStart(event) {
+      event.dataTransfer.setData("text", event.target.textContent);
+    }
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drop(event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text");
+      var programmingArea = document.getElementById("programmingArea");
+      var newBlock = document.createElement("div");
+      newBlock.textContent = data;
+      newBlock.className = "block";
+      programmingArea.appendChild(newBlock);
+    }
+
+    // Función para ejecutar el programa
+    function ejecutarPrograma() {
+      var programmingArea = document.getElementById("programmingArea");
+      var bloques = programmingArea.children;
+      var outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = ""; // Limpiar el contenido anterior
+      for (var i = 0; i < bloques.length; i++) {
+        var bloque = bloques[i].textContent;
+        // Agregar lógica para ejecutar cada bloque según corresponda
+        outputDiv.innerHTML += "Ejecutando bloque: " + bloque + "<br>";
+      }
+    }
+  </script>
+</body>
+</html>
